@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image, ImageBackground, ScrollView, FlatList } from 'react-native'
 
+import LoadingScreen from './components/LoadingScreen.js';
+
 import logo from './images/logo.png';
 import backgroundImage from './images/backgroundImage.jpg';
 
@@ -23,6 +25,22 @@ const images = [
 
 
 const App = () => {
+
+  
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate an async operation (e.g., loading data, initializing app)
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Change the delay as per your requirements
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  
   return (
     <View style={styles.container}>
   
