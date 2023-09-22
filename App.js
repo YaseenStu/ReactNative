@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image, ImageBackground, Button, FlatList } from 'react-native'
 
-import {NavigationContainer} from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 
-import {createNativeStackNavigator} from '@react-navigation/native-stack' 
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import LoadingScreen from './components/LoadingScreen.js';
 
@@ -15,15 +15,15 @@ import backgroundImage from './images/backgroundImage.jpg';
 const images = [
   {
     id: '1',
-    source: require('./images/img1.jpg') 
+    source: require('./images/img1.jpg')
   },
   {
-    id: '2', 
+    id: '2',
     source: require('./images/img2.jpg')
   },
   {
-   id: '3',
-   source: require('./images/img3.jpg')
+    id: '3',
+    source: require('./images/img3.jpg')
   }
 ];
 
@@ -31,7 +31,7 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
 
-  
+
   const [isLoading, setIsLoading] = useState(true);
 
   // Simulate an async operation (e.g., loading data, initializing app)
@@ -45,87 +45,98 @@ const App = () => {
     return <LoadingScreen />;
   }
 
-  
-  return (
-    <NavigationContainer>
-    <Stack.Navigator>
-      
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen  name="Home" component={Home} />
-    
-    </Stack.Navigator>
-    </NavigationContainer>
-      )
-    };
 
-  const Home =()=> {
-    return(
-      <View style={styles.container}>
-  
-     
-  
-      <ImageBackground 
+  return (
+    <NavigationContainer >
+      <Stack.Navigator screenOptions={{
+
+        headerStyle: {
+          backgroundColor: "skyblue",
+
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontSize: 25
+        }
+
+      }}>
+
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={Home} />
+
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+};
+
+const Home = () => {
+  return (
+    <View style={styles.container}>
+
+
+
+      <ImageBackground
         source={backgroundImage}
         style={styles.background}
       >
-   <Image source={logo} style={styles.logo} />
+        <Image source={logo} style={styles.logo} />
         <FlatList
           data={images}
-          
-          renderItem={({item}) => (
+
+          renderItem={({ item }) => (
             <Image source={item.source}
-            style={styles.image} />
-            
+              style={styles.image} />
+
           )}
-        
-          numColumns={3} 
-        
+
+          numColumns={3}
+
         />
-         <View>
+        <View>
           <Button title="Press Me" />
-         </View>
+        </View>
       </ImageBackground>
-  
+
     </View>
-    )
+  )
+}
+
+const Login = (props) => {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 20 }}>
+        This is Login Screen
+      </Text>
+      <Button title="Go to next page" onPress={() => props.navigation.navigate("Home")} />
+    </View>
+  )
+}
+
+
+
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1
+  },
+
+  logo: {
+    alignSelf: 'center',
+    marginTop: 20
+  },
+
+  background: {
+    flex: 1
+
+  },
+
+  image: {
+    width: 100,
+    height: 200,
+    margin: 18,
+    marginTop: 20
   }
 
-  const Login =(props)=> {
-    return(
-      <View style = {{flex: 1, justifyContent : 'center' , alignItems : 'center'}}>
-        <Text style = {{fontSize: 20}}>
-          This is Login Screen
-        </Text>
-        <Button title="Go to next page" onPress={()=>props.navigation.navigate("Home")}/>
-      </View>
-    )
-  }
-
-  
-
-  const styles = StyleSheet.create({
-  
-    container: {
-      flex: 1
-    },
-  
-    logo: {
-      alignSelf: 'center',
-      marginTop: 20
-    },
-    
-    background: {
-      flex: 1
-
-    },
-  
-    image: {
-      width: 100,
-      height: 200,
-      margin: 18,
-      marginTop :20
-    }
-  
-  });
+});
 
 export default App;
