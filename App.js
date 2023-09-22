@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, Image, ImageBackground, ScrollView, FlatList } from 'react-native'
+import { Text, View, StyleSheet, Image, ImageBackground, Button, FlatList } from 'react-native'
+
+import {NavigationContainer} from '@react-navigation/native'
+
+import {createNativeStackNavigator} from '@react-navigation/native-stack' 
 
 import LoadingScreen from './components/LoadingScreen.js';
 
@@ -23,6 +27,7 @@ const images = [
   }
 ];
 
+const Stack = createNativeStackNavigator();
 
 const App = () => {
 
@@ -42,7 +47,20 @@ const App = () => {
 
   
   return (
-    <View style={styles.container}>
+    <NavigationContainer>
+    <Stack.Navigator>
+      
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen  name="Home" component={Home} />
+    
+    </Stack.Navigator>
+    </NavigationContainer>
+      )
+    };
+
+  const Home =()=> {
+    return(
+      <View style={styles.container}>
   
      
   
@@ -63,12 +81,28 @@ const App = () => {
           numColumns={3} 
         
         />
-         
+         <View>
+          <Button title="Press Me" />
+         </View>
       </ImageBackground>
   
     </View>
-  )};
+    )
+  }
+
+  const Login =(props)=> {
+    return(
+      <View style = {{flex: 1, justifyContent : 'center' , alignItems : 'center'}}>
+        <Text style = {{fontSize: 20}}>
+          This is Login Screen
+        </Text>
+        <Button title="Go to next page" onPress={()=>props.navigation.navigate("Home")}/>
+      </View>
+    )
+  }
+
   
+
   const styles = StyleSheet.create({
   
     container: {
